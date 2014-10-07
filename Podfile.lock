@@ -14,11 +14,14 @@ PODS:
     - FontAwesomeKit/Core
   - FontAwesomeKit/Zocial (2.1.8):
     - FontAwesomeKit/Core
+  - SVProgressHUD (1.0)
 
 DEPENDENCIES:
   - FontAwesomeKit (~> 2.1.0)
+  - SVProgressHUD
 
 SPEC CHECKSUMS:
   FontAwesomeKit: a2edea3111dab107b4cc43b85881b404eb063385
+  SVProgressHUD: 5034c6e22b8c2ca3e09402e48d41ed0340aa1c50
 
 COCOAPODS: 0.34.1

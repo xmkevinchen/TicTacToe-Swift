@@ -7,6 +7,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 target "TicTacToe" do
 	pod 'FontAwesomeKit', '~> 2.1.0'
+    pod 'SVProgressHUD'
 end
 
 target "TicTacToeTests" do

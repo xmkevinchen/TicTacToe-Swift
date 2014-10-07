@@ -12,7 +12,8 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        var heart = FAKIonIcons.ios7HeartOutlineIconWithSize(30).imageWithSize(CGSizeMake(30, 30))
+        navigationItem.rightBarButtonItem = UIBarButtonItem (image: heart, style: UIBarButtonItemStyle.Bordered, target: nil, action: nil)
     }
 
     override func didReceiveMemoryWarning() {
