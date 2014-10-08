@@ -18,6 +18,7 @@ class Game {
     var playerX: Player     // Always the first player
     var playerO: Player     // Always the second player
     var board: GameBoard
+    var moves: [Int] = []
     
     init(mode: GameMode = .Computer) {
         self.mode = mode
@@ -44,6 +45,9 @@ class Game {
     
     func reset() {
         board.reset()
+        playerX.moves.removeAll(keepCapacity: false)
+        playerO.moves.removeAll(keepCapacity: false)
+        moves.removeAll(keepCapacity: false)
         
     }        
 }

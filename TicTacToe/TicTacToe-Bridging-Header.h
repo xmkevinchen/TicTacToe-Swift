@@ -4,3 +4,6 @@
 
 #import <FontAwesomeKit/FontAwesomeKit.h>
 #import <SVProgressHUD/SVProgressHUD.h>
+#import <ReactiveCocoa/ReactiveCocoa.h>
+#import <ReactiveCocoa/RACEXTScope.h>
+

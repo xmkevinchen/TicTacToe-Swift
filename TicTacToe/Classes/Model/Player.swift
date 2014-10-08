@@ -14,6 +14,7 @@ enum PlayerType {
 
 class Player {
     var type: PlayerType
+    var moves: [Int] = []
     
     init(type: PlayerType = .Human) {
         self.type = type

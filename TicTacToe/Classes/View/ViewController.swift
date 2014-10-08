@@ -8,17 +8,79 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, GameBoardDataSource, GameBoardDelegate, GameDelegate {
+    
+    
+    @IBOutlet weak var boardView: GameBoardView!
+    var gameController: GameController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        var heart = FAKIonIcons.ios7HeartOutlineIconWithSize(30).imageWithSize(CGSizeMake(30, 30))
-//        navigationItem.rightBarButtonItem = UIBarButtonItem (image: heart, style: UIBarButtonItemStyle.Bordered, target: nil, action: nil)
+        title = "Tic Tac Toe"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "gameReset:")
+        
+        gameController = GameController()
+        gameController.delegate = self
+        
+        boardView.delegate = self
+        boardView.dataSource = self                    
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func gameReset(sender: AnyObject) {
+        
+        if gameController.status == GameStatus.Playing {
+            var alert = UIAlertView(title: "New Game?", message: "", delegate: nil, cancelButtonTitle: "Cancel")
+            alert.addButtonWithTitle("Confirm")
+            alert.rac_buttonClickedSignal().subscribeNext { buttonIndex in
+                if buttonIndex as Int == 1 {
+                    self.gameController.reset()
+                    self.boardView.reloadData()
+                }
+            }
+            alert.show()
+        } else {
+            self.gameController.reset()
+            self.boardView.reloadData()
+        }
+    }
+    
+    
+    // MARK: GameBoardView
+    
+    func boardView(boardView: GameBoardView, squareTypeAtIndex: Int) -> GameSquareType {
+        return gameController.squareType(squareTypeAtIndex)
+    }
+    
+    func boardView(boardView: GameBoardView, canPressSquareAtIndex: Int) -> Bool {
+        return GameSquareType.Empty == gameController.squareType(canPressSquareAtIndex)
+            && GameStatus.Over != gameController.status
+    }
+    
+    func boardView(boardView: GameBoardView, didPressSquareAtIndex: Int) {
+        gameController.moveAt(didPressSquareAtIndex)
+        
+    }
+    
+    // MARK: GameDelegate
+    func gameController(gameController: GameController, didMoveAtIndex: Int) {
+        boardView.reloadCellAt(didMoveAtIndex)
+    }
+    
+    func gameControllerPlayerXDidWin(gameController: GameController) {
+        UIAlertView(title: "Player X Win", message: "Congratulation", delegate: nil, cancelButtonTitle: "OK").show()
+    }
+    
+    func gameControllerPlayerODidWin(gameController: GameController) {
+        UIAlertView(title: "Player O Win", message: "Congratulation", delegate: nil, cancelButtonTitle: "OK").show()
+    }
+    
+    func gameControllerDidDraw(gameController: GameController) {
+        UIAlertView(title: "Draw", message: "One more time...", delegate: nil, cancelButtonTitle: "OK").show()
     }
 
 
