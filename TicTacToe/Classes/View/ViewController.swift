@@ -31,9 +31,10 @@ class ViewController: UIViewController, GameBoardDataSource, GameBoardDelegate, 
         // Dispose of any resources that can be recreated.
     }
     
-    func gameReset(sender: AnyObject) {
+    func gameReset(sender: AnyObject!) {
         
-        if gameController.status == GameStatus.Playing {
+        switch gameController.status {
+        case .Playing:
             var alert = UIAlertView(title: "New Game?", message: "", delegate: nil, cancelButtonTitle: "Cancel")
             alert.addButtonWithTitle("Confirm")
             alert.rac_buttonClickedSignal().subscribeNext { buttonIndex in
@@ -43,10 +44,16 @@ class ViewController: UIViewController, GameBoardDataSource, GameBoardDelegate, 
                 }
             }
             alert.show()
-        } else {
+            
+        case .Over:
             self.gameController.reset()
             self.boardView.reloadData()
+
+        default:
+            break
+            
         }
+        
     }
     
     

@@ -133,8 +133,6 @@ class GameBoardView: UIView, UIGestureRecognizerDelegate {
     }
     
     private func setUpBoardLines() {
-//        self.layer.borderColor = UIColor.blackColor().CGColor
-//        self.layer.borderWidth = 1
         // Draw the board lines
         var offsetx = frame.size.width / 3
         var offsety = frame.size.height / 3
