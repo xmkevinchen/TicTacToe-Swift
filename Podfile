@@ -11,6 +11,7 @@ target "TicTacToe" do
 end
 
 target "TicTacToeTests" do
-
+    pod 'FontAwesomeKit', '~> 2.1.0'
+    pod 'SVProgressHUD'
 end
 
