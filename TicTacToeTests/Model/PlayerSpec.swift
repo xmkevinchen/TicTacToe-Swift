@@ -14,13 +14,13 @@ class PlayerSpec: QuickSpec {
     override func spec() {
         describe("Player Basic property") {
             it("it's human player by default") {
-                var player = Player()
-                expect(player.type == .Human).to(beTruthy())
+                var player = Player(type: .XType)
+                expect(player.mode == .Human).to(beTruthy())
             }
             
             it("it's a computer player") {
-                var player = Player(type: .Computer)
-                expect(player.type == .Computer).to(beTruthy())
+                var player = Player(mode: .Computer, type: .XType)
+                expect(player.mode == .Computer).to(beTruthy())
             }
         }
     }

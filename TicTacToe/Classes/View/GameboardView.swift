@@ -20,7 +20,8 @@ protocol GameBoardDelegate : NSObjectProtocol {
 }
 
 /**
- * Board index like below
+ * 
+Board index like below
  -------------------
  |     |     |     |
  |  0  |  1  |  2  |
@@ -47,7 +48,7 @@ class GameBoardView: UIView, UIGestureRecognizerDelegate {
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        println("frame = \(frame)")
+//        println("frame = \(frame)")
         self.squares = [UIImageView]()
         
         
@@ -73,8 +74,8 @@ class GameBoardView: UIView, UIGestureRecognizerDelegate {
     
     func tapAction(gesture: UITapGestureRecognizer) {
         var point = gesture.locationInView(self)
-        println("point \(point) tapped");
-        println("cell[\(indexOfCell(point))] tapped");
+//        println("point \(point) tapped");
+//        println("cell[\(indexOfCell(point))] tapped");
         
         delegate!.boardView(self, didPressSquareAtIndex: indexOfCell(point))
         

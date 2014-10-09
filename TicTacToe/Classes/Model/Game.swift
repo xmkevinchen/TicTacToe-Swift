@@ -12,7 +12,6 @@ enum GameMode {
     case Computer, Player, Auto
 }
 
-
 class Game {
     var mode: GameMode
     var playerX: Player     // Always the first player
@@ -26,17 +25,17 @@ class Game {
         
         switch mode {
         case .Computer:
-            self.playerX = Player()
-            self.playerO = Player(type: .Computer)
+            self.playerX = Player(type: .XType)
+            self.playerO = Player(mode: .Computer, type: .OType)
             
         case .Player:
-            self.playerX = Player()
-            self.playerO = Player()
+            self.playerX = Player(type: .XType)
+            self.playerO = Player(type: .OType)
             
         case .Auto:
             // TODO: play game automatically with two computer player
-            self.playerX = Player(type: .Computer)
-            self.playerO = Player(type: .Computer)
+            self.playerX = Player(mode: .Computer, type: .XType)
+            self.playerO = Player(mode: .Computer, type: .OType)
             
         default:
             break;

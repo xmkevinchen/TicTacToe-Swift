@@ -24,6 +24,7 @@ class GameController {
     var game: Game!
     var delegate: GameDelegate!
     var status: GameStatus
+    var ai: AIEngine
     
     private var wins = [[0, 1, 2], [3, 4, 5], [6, 7, 8],
                         [0, 3, 6], [1, 4, 7], [2, 5, 8],
@@ -31,8 +32,9 @@ class GameController {
                         ]
     
     init() {
-        self.game = Game(mode: .Player)
+        self.game = Game(mode: .Computer)
         self.status = .Start
+        self.ai = AIEngine(game: self.game)
         
     }
     
@@ -57,7 +59,7 @@ class GameController {
         
         delegate.gameController(self, didMoveAtIndex: index)
         
-        if isWinner(player) {
+        if ai.isWin() {
             if player === game.playerX {
                 delegate.gameControllerPlayerXDidWin(self)
             } else {
@@ -68,9 +70,16 @@ class GameController {
             return
         }
         
-        if game.moves.count == GameBoardSize {
+        if ai.isDraw() {
             delegate.gameControllerDidDraw(self)
             status = .Over
+            return
+        }
+        
+        player = whoseTurn()
+        if player.mode == .Computer {
+            let move = ai.nextMove()
+            moveAt(move)
         }
     }
     
@@ -78,38 +87,13 @@ class GameController {
         status = .Start
         game.reset()
     }
-    
-    private func isWinner(player: Player) -> Bool {
-        var type = GameSquareType.Empty
-        if player === game.playerX {
-            type = .Cross
-        } else {
-            type = .Circle
-        }
-        
-        var win = false
-        
-        for var i = 0; i < wins.count; i++ {
-            var indecies = wins[i]
-            if game.board.matrix[indecies[0]] != type {
-                continue
-            }
             
-            if game.board.matrix[indecies[0]] == game.board.matrix[indecies[1]]
-                && game.board.matrix[indecies[1]] == game.board.matrix[indecies[2]] {
-                win = true;
-                break;
-            }
-        }
-        
-        return win
-    }
-    
     private func whoseTurn() -> Player {
-        if game.playerX.moves.count <= game.playerO.moves.count {
+        if game.moves.count % 2 == 0 {
             return game.playerX
         } else {
             return game.playerO
         }
     }
+    
 }

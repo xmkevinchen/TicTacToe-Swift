@@ -1,67 +1,61 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6249" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="xAV-7M-hWY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6249" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="P8i-yU-tar">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6243"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
-        <scene sceneID="KPE-ge-U2g">
+        <scene sceneID="xe4-Zi-x38">
             <objects>
-                <navigationController id="xAV-7M-hWY" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="42U-yW-PK1">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oKv-kk-kvr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController id="P8i-yU-tar" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ff0-KJ-Wwv">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Eby-ZW-eAn"/>
+                        <segue destination="22d-Mb-MoK" kind="relationship" relationship="rootViewController" id="a1t-LN-egf"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Kpc-sZ-H25" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-76" y="-199"/>
+            <point key="canvasLocation" x="-504" y="270"/>
         </scene>
         <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
+        <scene sceneID="WgH-fe-rnr">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="TicTacToe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="22d-Mb-MoK" customClass="ViewController" customModule="TicTacToe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                        <viewControllerLayoutGuide type="top" id="s3d-Jz-hN2"/>
+                        <viewControllerLayoutGuide type="bottom" id="ccb-w0-Ado"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                    <view key="view" contentMode="scaleToFill" id="YOu-uF-VP1">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cod-0X-hmV" customClass="GameBoardView" customModule="TicTacToe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="320" height="320"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FhF-K1-yAI" customClass="GameBoardView" customModule="TicTacToe" customModuleProvider="target">
+                                <rect key="frame" x="140" y="140" width="320" height="320"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="320" id="6QK-Qv-1SJ"/>
-                                    <constraint firstAttribute="width" constant="320" id="C3c-Fn-sfY"/>
+                                    <constraint firstAttribute="width" constant="320" id="XfD-n5-731"/>
+                                    <constraint firstAttribute="height" constant="320" id="sLp-xh-OkW"/>
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerY" secondItem="Cod-0X-hmV" secondAttribute="centerY" id="0gC-cE-IIt"/>
-                            <constraint firstAttribute="centerX" secondItem="Cod-0X-hmV" secondAttribute="centerX" id="5rO-NE-V4c"/>
+                            <constraint firstAttribute="centerX" secondItem="FhF-K1-yAI" secondAttribute="centerX" id="FbK-67-Mzw"/>
+                            <constraint firstAttribute="centerY" secondItem="FhF-K1-yAI" secondAttribute="centerY" id="qTq-16-Xyu"/>
                         </constraints>
                     </view>
-                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <navigationItem key="navigationItem" id="dnv-ja-rWw"/>
+                    <navigationItem key="navigationItem" id="koQ-Jl-xjh"/>
                     <connections>
-                        <outlet property="boardView" destination="Cod-0X-hmV" id="U8K-Da-tqL"/>
+                        <outlet property="boardView" destination="FhF-K1-yAI" id="BbG-S9-INR"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LGk-6D-r9O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="315.19999999999999" y="-198.80000000000001"/>
+            <point key="canvasLocation" x="259.5" y="270"/>
         </scene>
     </scenes>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
-    </simulatedMetricsContainer>
 </document>

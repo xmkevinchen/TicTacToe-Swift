@@ -8,15 +8,21 @@
 
 import Foundation
 
-enum PlayerType {
+enum PlayerMode {
     case Human, Computer
 }
 
+enum PlayerType {
+    case XType, OType
+}
+
 class Player {
+    var mode: PlayerMode
     var type: PlayerType
     var moves: [Int] = []
     
-    init(type: PlayerType = .Human) {
+    init(mode: PlayerMode = .Human, type: PlayerType) {
+        self.mode = mode
         self.type = type
     }
     
