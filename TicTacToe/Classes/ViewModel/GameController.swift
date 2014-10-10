@@ -41,12 +41,12 @@ class GameController {
         
     }
     
-    func squareType(index: Int) -> GameSquareType {
-        return game.board.matrix[index]
+    func squareType(index: Int) -> SquareType {
+        return game.board[index]
     }
     
     func moveAt(index: Int) {
-        var type = GameSquareType.Empty
+        var type = SquareType.Empty
         if .Start == status {
             status = .Playing
         }
@@ -56,7 +56,7 @@ class GameController {
         } else {
             type = .Circle
         }
-        game.board.matrix[index] = type
+        game.board[index] = type
         player.moves.append(index)
         game.moves.append(index)
         
@@ -82,8 +82,10 @@ class GameController {
         player = currentPlayer()
         
         if player.mode == .Computer {
-            let move = ai.nextMove()
-            moveAt(move)
+            ai.nextMove() { index in
+                self.moveAt(index)
+            }
+            
         }
     }
     
@@ -108,8 +110,11 @@ class GameController {
         }
         
         if game.playerX.mode == .Computer {
-            let move = ai.nextMove()
-            moveAt(move)
+            ai.nextMove() { index in
+                self.moveAt(index)
+
+            }
+
         }
     }
             

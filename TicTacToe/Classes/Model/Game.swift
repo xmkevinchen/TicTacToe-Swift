@@ -12,16 +12,24 @@ enum GameMode {
     case Computer, Player, Auto
 }
 
+enum SquareType:String {
+    case Empty  = "-"
+    case Cross  = "X"
+    case Circle = "O"
+}
+
+let GameBoardSize = 9
+
 class Game {
     var mode: GameMode
     var playerX: Player     // Always the first player
     var playerO: Player     // Always the second player
-    var board: GameBoard
+    var board: [SquareType]
     var moves: [Int] = []
     
     init(mode: GameMode = .Auto) {
         self.mode = mode
-        self.board = GameBoard()
+        self.board = [SquareType](count: GameBoardSize, repeatedValue: .Empty)
         
         switch mode {
         case .Computer:
@@ -51,7 +59,7 @@ class Game {
     
     
     func reset() {
-        board.reset()
+        board = [SquareType](count: GameBoardSize, repeatedValue: .Empty)
         playerX.moves.removeAll(keepCapacity: false)
         playerO.moves.removeAll(keepCapacity: false)
         moves.removeAll(keepCapacity: false)

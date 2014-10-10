@@ -16,13 +16,16 @@ let INFINITY = 100
  */
 class AIEngine {
     
-    let WIN                 = INFINITY
-    let LOSE                = -INFINITY
-    let DOUBLE_CONNECTED    = INFINITY / 2
-    let DRAW                = 0
-    let INPROCESS           = 1
+    enum PlayerSide {
+        case X, O
+    }
     
-    private let wins = [
+    enum GameScore: Int {
+        case Zero = 0, Win = 10, Lose = -10
+    }
+
+    
+    let wins = [
         [0, 1, 2],
         [3, 4, 5],
         [6, 7, 8],
@@ -46,7 +49,7 @@ class AIEngine {
     }
     
     func isWin() -> Bool {
-        let board = game.board.matrix
+        let board = game.board
         var result = false
         for indecies in wins {
             var square = board[indecies[0]]
@@ -63,210 +66,165 @@ class AIEngine {
         return result
     }
     
-    
     func isDraw() -> Bool {
-        return game.moves.count == GameBoardSize && !isWin()
+        return game.moves.count == GameBoardSize
     }
     
-    func nextMove() -> Int {
-        if game.moves.count == 0 {
-            return 4
-        } else if game.moves.count == 1 {
-            if game.board.matrix[4] == .Empty {
-                return 4
-            } else {
-                var corners = [0, 2, 6, 8]
-                return corners[Int(arc4random() % 4)]
-            }
-        } else {
-            if game.moves.count % 2 == 0 {
-                return minimax(game.playerX, depth: 4)
-            } else {
-                return minimax(game.playerO, depth: 4)
+    
+    func isDraw(board: [SquareType]) -> Bool {
+        var isFull = true
+        for square in board {
+            if .Empty == square {
+                isFull = false
+                break
             }
         }
+        
+        return isFull && !isWin()
     }
     
-    private func minimax(player: Player, depth: Int) -> Int {
-        var bestMoves = [Int](count: GameBoardSize, repeatedValue: 0)
-        var index = 0
-        var bestValue = 0
-        if player === game.playerX {
-            bestValue = INFINITY
-            for var i = 0; i < GameBoardSize; i++ {
-                if game.board.matrix[i] == .Empty {
-                    game.board.matrix[i] = .Circle
-                    var value = maxMove(depth, alpha: INFINITY, beta: -INFINITY)
-                    if value < bestValue {
-                        bestValue = value
-                        index = 0
-                        bestMoves[index] = i
-                    } else if value == bestValue {
-                        index++
-                        bestMoves[index] = i
-                    }
-                    
-                    game.board.matrix[i] = .Empty
-                }
-            }
-        } else {
-            bestValue = -INFINITY
-            
-            for var i = 0; i < GameBoardSize; i++ {
-                if game.board.matrix[i] == .Empty {
-                    game.board.matrix[i] = .Cross
-                    var value = minMove(depth, alpha: -INFINITY, beta: INFINITY)
-                    if value > bestValue {
-                        bestValue = value
-                        index = 0
-                        bestMoves[index] = i
-                    } else if value == bestValue {
-                        index++
-                        bestMoves[index] = i
-                    }
-                    
-                    game.board.matrix[i] = .Empty
-                }
-            }
-            
-        }
-        
-        if index > 1 {
-            index = Int(arc4random()) % index
-        }
-        
-        return bestMoves[index]
-    }
-    
-    /**
-    Evaluate the value of current board
-    
-    :returns: evaluated value
-    */
-    private func evaluate() -> Int {
-        let board = game.board.matrix
-        
-        var result = INPROCESS
-        if isDraw() {
-            result = DRAW
-        }
-        
-        // check win or lose
+    func isWin(board: [SquareType]) -> Bool {
+        var win = false
         for indecies in wins {
-            var square = board[indecies[0]]
-            if square == .Empty {
+            if board[indecies[0]] == .Empty {
                 continue
             }
             
-            var i = 1
-            for ; i < indecies.count; i++ {
-                if board[indecies[i]] != square {
-                    break
-                }
-            }
-            
-            if i == indecies.count {
-                result = (square == .Cross) ? WIN : LOSE
+            var square = board[indecies[0]]
+            if board[indecies[0]] == board[indecies[1]] && board[indecies[1]] == board[indecies[2]] {
+                win = true
                 break
             }
-            
         }
         
-        if result != WIN && result != LOSE && result != DRAW {
-            // Find double connected
-            var xFounds = 0
-            var oFounds = 0
-            for indecies in wins {
-                var square = GameSquareType.Empty
-                var hasEmpty = false
-                var count = 0
-                for index in indecies {
-                    if board[index] == .Empty {
-                        hasEmpty = true
-                    } else {
-                        if square == .Empty {
-                            square = board[index]
-                        }
-                        
-                        if board[index] == square {
-                            count++
-                        }
-                    }
-                }
-                
-                if hasEmpty && count > 1 {
-                    if square == .Cross {
-                        xFounds++
-                    } else {
-                        oFounds++
-                    }
-                }
-            }
-            
-            if xFounds > 0 {
-                result = DOUBLE_CONNECTED
-            } else if oFounds > 0 {
-                result = -DOUBLE_CONNECTED
-            }
-            
-        }
-        
-        return result
+        return win
     }
     
-    private func maxMove(depth: Int, alpha: Int, beta: Int) -> Int {
-        
-        let value = evaluate()
-        if value != INPROCESS || depth == 0 || beta <= alpha {
-            return value
+    func isGameOver(board: [SquareType]) -> Bool {
+        return isWin(board) || isDraw(board)
+    }
+    
+    func gameScore(board: [SquareType]) -> Int {
+        var score: Int = 0
+        for indecies in wins {
+            if board[indecies[0]] == .Empty {
+                continue
+            }
+            
+            var square = board[indecies[0]]
+            if board[indecies[0]] == board[indecies[1]] && board[indecies[1]] == board[indecies[2]] {
+                score = (square == .Cross) ? GameScore.Win.rawValue : GameScore.Lose.rawValue
+                break
+            }
         }
         
-        var bestScore = -INFINITY
-        var board = game.board.matrix
-        for var i = 0; i < GameBoardSize; i++ {
+        return score
+    }
+    
+    func maxValue(var board: [SquareType], depth: Int) -> Int {
+        if isGameOver(board) || depth == 0 {
+            return gameScore(board)
+        }
+        
+        var bestValue = Int.min
+        for i in 0..<GameBoardSize {
             if board[i] == .Empty {
-                game.board.matrix[i] = .Cross
-                var tmp = minMove(depth - 1, alpha: max(bestScore, alpha), beta: beta)
-                bestScore = max(bestScore, tmp)
-                game.board.matrix[i] = .Empty
+                board[i] = .Cross
+                var value = minValue(board, depth: depth - 1)
+                bestValue = max(value, bestValue)
+                board[i] = .Empty
             }
         }
         
-        return bestScore
+        return bestValue
     }
     
-    private func minMove(depth: Int, alpha: Int, beta:Int) -> Int {
-        
-        let value = evaluate()
-        if value != INPROCESS {
-            return value
+    func minValue(var board: [SquareType], depth: Int) -> Int {
+//        printBoard(board)
+        if isGameOver(board) || depth == 0 {
+            return gameScore(board)
         }
         
-        var bestScore = INFINITY
-        for var i = 0; i < GameBoardSize; i++ {
-            if game.board.matrix[i] == .Empty {
-                game.board.matrix[i] = .Circle
-                var tmp = maxMove(depth - 1, alpha: alpha, beta: min(bestScore, beta))
-                bestScore = min(bestScore, tmp)
-                game.board.matrix[i] = .Empty
+        var bestValue = Int.max
+        for i in 0..<GameBoardSize {
+            if board[i] == .Empty {
+                board[i] = .Circle
+                var value = maxValue(board, depth: depth - 1)
+                bestValue = min(value, bestValue)
+                board[i] = .Empty
             }
         }
         
-        return bestScore
+        return bestValue
     }
     
-    private func printBoard() {
-        let board = game.board.matrix
+    func minimax(var board: [SquareType], side: PlayerSide, depth: Int) -> Int {
+        var moves: [Int] = []
+        if side == .X {
+            var bestScore = Int.min
+            for i in 0..<GameBoardSize {
+                if board[i] == .Empty {
+                    board[i] = .Cross
+                    var score = minValue(board, depth: depth)
+                    if score > bestScore {
+                        moves.removeAll(keepCapacity: false)
+                        bestScore = score
+                        moves.append(i)
+                    } else if score == bestScore {
+                        moves.append(i)
+                    }
+                    board[i] = .Empty
+                }
+            }
+        } else {
+            var bestScore = Int.max
+            for i in 0..<GameBoardSize {
+                if board[i] == .Empty {
+                    board[i] = .Circle
+                    var score = maxValue(board, depth: depth)
+                    if score < bestScore {
+                        moves.removeAll(keepCapacity: false)
+                        bestScore = score
+                        moves.append(i)
+                    } else if score == bestScore {
+                        moves.append(i)
+                    }
+                    board[i] = .Empty
+                }
+            }
+
+        }
+        
+        return moves.count > 0 ? moves.last! : 0
+    }
+    
+    func nextMove(closure: (Int) -> Void) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            var index: Int!
+            if self.game.moves.count % 2 == 0 {
+                index = self.minimax(self.game.board, side: .X, depth: 3)
+            } else {
+                index = self.minimax(self.game.board, side: .O, depth: 3)
+            }
+            dispatch_async(dispatch_get_main_queue(), {
+                closure(index)
+            })
+        });
+        
+    }
+    
+    func printBoard(board:[SquareType]) {
+        println("==========")
         for var i = 0; i < GameBoardSize; i++ {
             if i != 0 && i % 3 == 0 {
                 println()
             }
-            var square: GameSquareType = board[i]
+            var square: SquareType = board[i]
             print("\(square.rawValue) ")
             
         }
-        
         println()
+        println("==========")
     }
     
     

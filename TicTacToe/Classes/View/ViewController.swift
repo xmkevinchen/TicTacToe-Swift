@@ -83,12 +83,12 @@ class ViewController: UIViewController, GameBoardDataSource, GameBoardDelegate, 
     
     // MARK: GameBoardView
     
-    func boardView(boardView: GameBoardView, squareTypeAtIndex: Int) -> GameSquareType {
+    func boardView(boardView: GameBoardView, squareTypeAtIndex: Int) -> SquareType {
         return gameController.squareType(squareTypeAtIndex)
     }
     
     func boardView(boardView: GameBoardView, canPressSquareAtIndex: Int) -> Bool {
-        return GameSquareType.Empty == gameController.squareType(canPressSquareAtIndex)
+        return gameController.squareType(canPressSquareAtIndex) == SquareType.Empty
             && GameStatus.Over != gameController.status
     }
     
