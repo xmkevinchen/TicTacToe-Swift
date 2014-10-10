@@ -111,7 +111,16 @@ class ViewController: UIViewController, GameBoardDataSource, GameBoardDelegate, 
     }
     
     func gameControllerDidDraw(gameController: GameController) {
-        UIAlertView(title: "Draw", message: "One more time...", delegate: nil, cancelButtonTitle: "OK").show()
+        UIAlertView(title: "Draw", message: "", delegate: nil, cancelButtonTitle: "OK").show()
+    }
+    
+    func gameControllerComputerStartThinking(gameController: GameController) {
+        SVProgressHUD.showWithStatus("Thinking...")
+        
+    }
+    
+    func gameControllerComputerCompleteThinking(gameController: GameController) {
+        SVProgressHUD.dismiss()
     }
 
 

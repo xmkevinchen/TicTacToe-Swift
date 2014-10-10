@@ -202,9 +202,9 @@ class AIEngine {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             var index: Int!
             if self.game.moves.count % 2 == 0 {
-                index = self.minimax(self.game.board, side: .X, depth: 3)
+                index = self.minimax(self.game.board, side: .X, depth: 2)
             } else {
-                index = self.minimax(self.game.board, side: .O, depth: 3)
+                index = self.minimax(self.game.board, side: .O, depth: 2)
             }
             dispatch_async(dispatch_get_main_queue(), {
                 closure(index)

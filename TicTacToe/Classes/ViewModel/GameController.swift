@@ -13,6 +13,8 @@ protocol GameDelegate {
     func gameControllerPlayerXDidWin(gameController: GameController)
     func gameControllerPlayerODidWin(gameController: GameController)
     func gameControllerDidDraw(gameController: GameController)
+    func gameControllerComputerStartThinking(gameController: GameController)
+    func gameControllerComputerCompleteThinking(gameController: GameController)
 }
 
 enum GameStatus {
@@ -82,7 +84,9 @@ class GameController {
         player = currentPlayer()
         
         if player.mode == .Computer {
+            delegate.gameControllerComputerStartThinking(self)
             ai.nextMove() { index in
+                self.delegate.gameControllerComputerCompleteThinking(self)
                 self.moveAt(index)
             }
             
