@@ -7,8 +7,8 @@
 //
 
 import Foundation
-enum GameSquareType {
-    case Empty, Cross, Circle
+enum GameSquareType:String {
+    case Empty = "-", Cross = "X", Circle = "O"
 }
 
 let GameBoardSize = 9

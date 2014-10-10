@@ -23,7 +23,14 @@ class ViewController: UIViewController, GameBoardDataSource, GameBoardDelegate, 
         gameController.delegate = self
         
         boardView.delegate = self
-        boardView.dataSource = self                    
+        boardView.dataSource = self
+        
+        gameController.reset()
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -48,6 +55,9 @@ class ViewController: UIViewController, GameBoardDataSource, GameBoardDelegate, 
         case .Over:
             self.gameController.reset()
             self.boardView.reloadData()
+            
+        case .Start:
+            self.gameController.reset()
 
         default:
             break

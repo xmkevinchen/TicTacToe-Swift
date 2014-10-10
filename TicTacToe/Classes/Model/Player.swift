@@ -12,18 +12,13 @@ enum PlayerMode {
     case Human, Computer
 }
 
-enum PlayerType {
-    case XType, OType
-}
 
 class Player {
     var mode: PlayerMode
-    var type: PlayerType
     var moves: [Int] = []
     
-    init(mode: PlayerMode = .Human, type: PlayerType) {
+    init(mode: PlayerMode = .Human) {
         self.mode = mode
-        self.type = type
     }
     
 }

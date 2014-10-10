@@ -47,7 +47,7 @@ class GameController {
         if .Start == status {
             status = .Playing
         }
-        var player = whoseTurn()
+        var player = currentPlayer()
         if player === game.playerX {
             type = .Cross
         } else {
@@ -76,7 +76,8 @@ class GameController {
             return
         }
         
-        player = whoseTurn()
+        player = currentPlayer()
+        
         if player.mode == .Computer {
             let move = ai.nextMove()
             moveAt(move)
@@ -86,9 +87,13 @@ class GameController {
     func reset() {
         status = .Start
         game.reset()
+        if game.playerX.mode == .Computer {
+            let move = ai.nextMove()
+            moveAt(move)
+        }
     }
             
-    private func whoseTurn() -> Player {
+    private func currentPlayer() -> Player {
         if game.moves.count % 2 == 0 {
             return game.playerX
         } else {

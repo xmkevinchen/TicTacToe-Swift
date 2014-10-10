@@ -19,23 +19,24 @@ class Game {
     var board: GameBoard
     var moves: [Int] = []
     
-    init(mode: GameMode = .Computer) {
+    init(mode: GameMode = .Auto) {
         self.mode = mode
         self.board = GameBoard()
         
         switch mode {
         case .Computer:
-            self.playerX = Player(type: .XType)
-            self.playerO = Player(mode: .Computer, type: .OType)
+            self.playerX = Player(mode: .Computer)
+            self.playerO = Player()
+            
             
         case .Player:
-            self.playerX = Player(type: .XType)
-            self.playerO = Player(type: .OType)
+            self.playerX = Player()
+            self.playerO = Player()
             
         case .Auto:
             // TODO: play game automatically with two computer player
-            self.playerX = Player(mode: .Computer, type: .XType)
-            self.playerO = Player(mode: .Computer, type: .OType)
+            self.playerX = Player(mode: .Computer)
+            self.playerO = Player(mode: .Computer)
             
         default:
             break;
