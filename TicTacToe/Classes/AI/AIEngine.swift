@@ -72,7 +72,12 @@ class AIEngine {
         if game.moves.count == 0 {
             return 4
         } else if game.moves.count == 1 {
-            return [0, 2, 6, 8][Int(arc4random() % 4)]
+            if game.board.matrix[4] == .Empty {
+                return 4
+            } else {
+                var corners = [0, 2, 6, 8]
+                return corners[Int(arc4random() % 4)]
+            }
         } else {
             if game.moves.count % 2 == 0 {
                 return minimax(game.playerX, depth: 4)

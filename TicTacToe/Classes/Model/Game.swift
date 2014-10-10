@@ -25,8 +25,8 @@ class Game {
         
         switch mode {
         case .Computer:
-            self.playerX = Player(mode: .Computer)
-            self.playerO = Player()
+            self.playerO = Player(mode: .Computer)
+            self.playerX = Player()
             
             
         case .Player:
