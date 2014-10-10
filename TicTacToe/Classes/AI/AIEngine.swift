@@ -8,8 +8,6 @@
 
 import Foundation
 
-let INFINITY = 100
-
 /**
  *  AI engine for computer
  *  AI algorithm comes from the Minimax algorithm
@@ -147,8 +145,8 @@ class AIEngine {
        
         var score = gameScore(board)
         if isGameOver(board) || depth == 0 || alpha >= beta {
-            printBoard(board)
-            println("maxValue = \(score)")
+//            printBoard(board)
+//            println("maxValue = \(score)")
             return score
         }
         
@@ -169,8 +167,8 @@ class AIEngine {
         
         var score = gameScore(board)
         if isGameOver(board) || depth == 0 || alpha >= beta {
-            printBoard(board)
-            println("minValue = \(score)")
+//            printBoard(board)
+//            println("minValue = \(score)")
             return score
         }
         
