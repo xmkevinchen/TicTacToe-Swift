@@ -143,16 +143,20 @@ class AIEngine {
             When a node is visited last, its score is set to the alpha value of that node, if it is a MAX node, otherwise it is set to the beta value.
      */
     
-    func maxValue(var board: [SquareType], depth: Int, alpha: Int, beta:Int) -> Int {
+    func maxValue(inout board: [SquareType], depth: Int, alpha: Int, beta:Int) -> Int {
+       
+        var score = gameScore(board)
         if isGameOver(board) || depth == 0 || alpha >= beta {
-            return gameScore(board)
+            printBoard(board)
+            println("maxValue = \(score)")
+            return score
         }
         
         var bestValue = Int.min
         for i in 0..<GameBoardSize {
             if board[i] == .Empty {
                 board[i] = .Cross
-                var value = minValue(board, depth: depth - 1, alpha: max(bestValue, alpha), beta: beta)
+                var value = minValue(&board, depth: depth - 1, alpha: max(bestValue, alpha), beta: beta)
                 bestValue = max(value, bestValue)
                 board[i] = .Empty
             }
@@ -161,17 +165,20 @@ class AIEngine {
         return bestValue
     }
     
-    func minValue(var board: [SquareType], depth: Int, alpha: Int, beta: Int) -> Int {
-//        printBoard(board)
+    func minValue(inout board: [SquareType], depth: Int, alpha: Int, beta: Int) -> Int {
+        
+        var score = gameScore(board)
         if isGameOver(board) || depth == 0 || alpha >= beta {
-            return gameScore(board)
+            printBoard(board)
+            println("minValue = \(score)")
+            return score
         }
         
         var bestValue = Int.max
         for i in 0..<GameBoardSize {
             if board[i] == .Empty {
                 board[i] = .Circle
-                var value = maxValue(board, depth: depth - 1, alpha: alpha, beta: min(bestValue, beta))
+                var value = maxValue(&board, depth: depth - 1, alpha: alpha, beta: min(bestValue, beta))
                 bestValue = min(value, bestValue)
                 board[i] = .Empty
             }
@@ -180,14 +187,14 @@ class AIEngine {
         return bestValue
     }
     
-    func minimax(var board: [SquareType], side: PlayerSide, depth: Int) -> Int {
+    func minimax(inout board: [SquareType], side: PlayerSide, depth: Int) -> Int {
         var moves: [Int] = []
         if side == .X {
             var bestScore = Int.min
             for i in 0..<GameBoardSize {
                 if board[i] == .Empty {
                     board[i] = .Cross
-                    var score = minValue(board, depth: depth, alpha: GameScore.Lose.rawValue, beta: GameScore.Win.rawValue)
+                    var score = minValue(&board, depth: depth, alpha: GameScore.Lose.rawValue, beta: GameScore.Win.rawValue)
                     if score > bestScore {
                         moves.removeAll(keepCapacity: false)
                         bestScore = score
@@ -203,7 +210,7 @@ class AIEngine {
             for i in 0..<GameBoardSize {
                 if board[i] == .Empty {
                     board[i] = .Circle
-                    var score = maxValue(board, depth: depth, alpha: GameScore.Lose.rawValue, beta: GameScore.Win.rawValue)
+                    var score = maxValue(&board, depth: depth, alpha: GameScore.Lose.rawValue, beta: GameScore.Win.rawValue)
                     if score < bestScore {
                         moves.removeAll(keepCapacity: false)
                         bestScore = score
@@ -217,16 +224,28 @@ class AIEngine {
 
         }
         
-        return moves.count > 0 ? moves.last! : 0
+//        println("moves = \(moves)")
+        
+        return moves.count > 0 ? moves[Int(arc4random()) % moves.count] : 0
     }
     
     func nextMove(closure: (Int) -> Void) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             var index: Int!
-            if self.game.moves.count % 2 == 0 {
-                index = self.minimax(self.game.board, side: .X, depth: self.RecursiveDepth)
+            if self.game.moves.count <= 2 {
+                // Help computer to chose best position for the first round
+                // Center is the best, and then is corners
+                if self.game.board[4] == .Empty {
+                    index = 4
+                } else {
+                    index = [0, 3, 6, 8][Int(arc4random()) % 4]
+                }
             } else {
-                index = self.minimax(self.game.board, side: .O, depth: self.RecursiveDepth)
+                if self.game.moves.count % 2 == 0 {
+                    index = self.minimax(&self.game.board, side: .X, depth: self.RecursiveDepth)
+                } else {
+                    index = self.minimax(&self.game.board, side: .O, depth: self.RecursiveDepth)
+                }
             }
             dispatch_async(dispatch_get_main_queue(), {
                 closure(index)

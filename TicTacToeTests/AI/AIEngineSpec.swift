@@ -117,7 +117,7 @@ class AIEngineSpec: QuickSpec {
                         .Cross,     .Circle,    .Circle
                     ]
                     
-                    let value = ai.maxValue(board, depth: 4, alpha: AIEngine.GameScore.Lose.rawValue, beta:AIEngine.GameScore.Win.rawValue)
+                    let value = ai.maxValue(&board, depth: 4, alpha: AIEngine.GameScore.Lose.rawValue, beta:AIEngine.GameScore.Win.rawValue)
                     expect(value).to(equal(AIEngine.GameScore.Win.rawValue))
                 }
                 
@@ -128,7 +128,7 @@ class AIEngineSpec: QuickSpec {
                         .Cross,     .Circle,    .Circle
                     ]
                     
-                    var value = ai.minValue(board, depth: 4, alpha: AIEngine.GameScore.Lose.rawValue, beta:AIEngine.GameScore.Win.rawValue)
+                    var value = ai.minValue(&board, depth: 4, alpha: AIEngine.GameScore.Lose.rawValue, beta:AIEngine.GameScore.Win.rawValue)
                     expect(value).to(equal(-10))
                     
                     board = [
@@ -137,7 +137,7 @@ class AIEngineSpec: QuickSpec {
                         .Cross,     .Circle,    .Circle
                     ]
                     
-                    value = ai.minValue(board, depth: 4, alpha: AIEngine.GameScore.Lose.rawValue, beta:AIEngine.GameScore.Win.rawValue)
+                    value = ai.minValue(&board, depth: 4, alpha: AIEngine.GameScore.Lose.rawValue, beta:AIEngine.GameScore.Win.rawValue)
                     expect(value).to(equal(-10))
                 }
                 
@@ -148,7 +148,7 @@ class AIEngineSpec: QuickSpec {
                         .Cross,     .Circle,    .Circle
                     ]
                     
-                    var index = ai.minimax(board, side: AIEngine.PlayerSide.X, depth: 4)
+                    var index = ai.minimax(&board, side: AIEngine.PlayerSide.X, depth: 4)
                     expect(index).to(equal(4))
 
                 }
