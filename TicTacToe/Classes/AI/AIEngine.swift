@@ -24,6 +24,7 @@ class AIEngine {
         case Zero = 0, Win = 10, Lose = -10
     }
 
+    private let RecursiveDepth = 2
     
     let wins = [
         [0, 1, 2],
@@ -223,9 +224,9 @@ class AIEngine {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             var index: Int!
             if self.game.moves.count % 2 == 0 {
-                index = self.minimax(self.game.board, side: .X, depth: 2)
+                index = self.minimax(self.game.board, side: .X, depth: self.RecursiveDepth)
             } else {
-                index = self.minimax(self.game.board, side: .O, depth: 2)
+                index = self.minimax(self.game.board, side: .O, depth: self.RecursiveDepth)
             }
             dispatch_async(dispatch_get_main_queue(), {
                 closure(index)

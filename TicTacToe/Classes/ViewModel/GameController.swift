@@ -114,9 +114,10 @@ class GameController {
         }
         
         if game.playerX.mode == .Computer {
+            delegate.gameControllerComputerStartThinking(self)
             ai.nextMove() { index in
+                self.delegate.gameControllerComputerCompleteThinking(self)
                 self.moveAt(index)
-
             }
 
         }

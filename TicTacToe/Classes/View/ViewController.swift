@@ -116,11 +116,12 @@ class ViewController: UIViewController, GameBoardDataSource, GameBoardDelegate, 
     
     func gameControllerComputerStartThinking(gameController: GameController) {
         SVProgressHUD.showWithStatus("Thinking...")
-        
+        boardView.userInteractionEnabled = false
     }
     
     func gameControllerComputerCompleteThinking(gameController: GameController) {
         SVProgressHUD.dismiss()
+        boardView.userInteractionEnabled = true
     }
 
 
