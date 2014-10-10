@@ -121,8 +121,29 @@ class AIEngine {
         return score
     }
     
-    func maxValue(var board: [SquareType], depth: Int) -> Int {
-        if isGameOver(board) || depth == 0 {
+    /**
+     ALPHA-BETA Pruning
+    
+        ALPHA-BETA cutoff is a method for reducing the number of nodes explored in the Minimax strategy. For the nodes it explores it computes, in addition to the score, an alpha value and a beta value.
+    
+        ALPHA value of a node
+            It is a value never greater than the true score of this node.
+            Initially it is the score of that node, if the node is a leaf, otherwise it is -infinity.
+            Then at a MAX node it is set to the largest of the scores of its successors explored up to now, and at a MIN node to the alpha value of its predecessor.
+    
+        BETA value of a node
+            It is a value never smaller than the true score of this node. Initially it is the score of that node, if the node is a leaf, otherwise it is +infinity.
+            Then at a MIN node it is set to the smallest of the scores of its successors explored up to now, and at a MAX node to the beta value of its predecessor.
+    
+        It Is Guaranteed That:
+    
+            The score of a node will always be no less than the alpha value and no greater than the beta value of that node.
+            As the algorithm evolves, the alpha and beta values of a node may change, but the alpha value will never decrease, and the beta value will never increase.
+            When a node is visited last, its score is set to the alpha value of that node, if it is a MAX node, otherwise it is set to the beta value.
+     */
+    
+    func maxValue(var board: [SquareType], depth: Int, alpha: Int, beta:Int) -> Int {
+        if isGameOver(board) || depth == 0 || alpha >= beta {
             return gameScore(board)
         }
         
@@ -130,7 +151,7 @@ class AIEngine {
         for i in 0..<GameBoardSize {
             if board[i] == .Empty {
                 board[i] = .Cross
-                var value = minValue(board, depth: depth - 1)
+                var value = minValue(board, depth: depth - 1, alpha: max(bestValue, alpha), beta: beta)
                 bestValue = max(value, bestValue)
                 board[i] = .Empty
             }
@@ -139,9 +160,9 @@ class AIEngine {
         return bestValue
     }
     
-    func minValue(var board: [SquareType], depth: Int) -> Int {
+    func minValue(var board: [SquareType], depth: Int, alpha: Int, beta: Int) -> Int {
 //        printBoard(board)
-        if isGameOver(board) || depth == 0 {
+        if isGameOver(board) || depth == 0 || alpha >= beta {
             return gameScore(board)
         }
         
@@ -149,7 +170,7 @@ class AIEngine {
         for i in 0..<GameBoardSize {
             if board[i] == .Empty {
                 board[i] = .Circle
-                var value = maxValue(board, depth: depth - 1)
+                var value = maxValue(board, depth: depth - 1, alpha: alpha, beta: min(bestValue, beta))
                 bestValue = min(value, bestValue)
                 board[i] = .Empty
             }
@@ -165,7 +186,7 @@ class AIEngine {
             for i in 0..<GameBoardSize {
                 if board[i] == .Empty {
                     board[i] = .Cross
-                    var score = minValue(board, depth: depth)
+                    var score = minValue(board, depth: depth, alpha: GameScore.Lose.rawValue, beta: GameScore.Win.rawValue)
                     if score > bestScore {
                         moves.removeAll(keepCapacity: false)
                         bestScore = score
@@ -181,7 +202,7 @@ class AIEngine {
             for i in 0..<GameBoardSize {
                 if board[i] == .Empty {
                     board[i] = .Circle
-                    var score = maxValue(board, depth: depth)
+                    var score = maxValue(board, depth: depth, alpha: GameScore.Lose.rawValue, beta: GameScore.Win.rawValue)
                     if score < bestScore {
                         moves.removeAll(keepCapacity: false)
                         bestScore = score
