@@ -11,7 +11,7 @@ import UIKit
 protocol GameBoardDataSource : NSObjectProtocol {
 
 //    func numberOfSquareInBoardView(boardView: GameBoardView) -> Int
-    func boardView(boardView: GameBoardView, squareTypeAtIndex: Int) -> GameSquareType
+    func boardView(boardView: GameBoardView, squareTypeAtIndex: Int) -> SquareType
 }
 
 protocol GameBoardDelegate : NSObjectProtocol {
