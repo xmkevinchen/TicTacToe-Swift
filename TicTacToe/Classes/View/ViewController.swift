@@ -13,6 +13,10 @@ class ViewController: UIViewController, GameBoardDataSource, GameBoardDelegate, 
     
     @IBOutlet weak var boardView: GameBoardView!
     var gameController: GameController!
+    
+    @IBOutlet weak var vsComputerSwitch: UISwitch!
+    @IBOutlet weak var computerFirstSwitch: UISwitch!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +30,10 @@ class ViewController: UIViewController, GameBoardDataSource, GameBoardDelegate, 
         boardView.dataSource = self
         
         gameController.reset()
+        
+        vsComputerSwitch.rac_signalForControlEvents(.ValueChanged).subscribeNext { uiswitch in
+            self.computerFirstSwitch.enabled = (uiswitch as UISwitch).on
+        }
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -46,6 +54,8 @@ class ViewController: UIViewController, GameBoardDataSource, GameBoardDelegate, 
             alert.addButtonWithTitle("Confirm")
             alert.rac_buttonClickedSignal().subscribeNext { buttonIndex in
                 if buttonIndex as Int == 1 {
+                    self.gameController.vsComputer = self.vsComputerSwitch.on
+                    self.gameController.computerFirst = self.computerFirstSwitch.on
                     self.gameController.reset()
                     self.boardView.reloadData()
                 }
@@ -53,10 +63,14 @@ class ViewController: UIViewController, GameBoardDataSource, GameBoardDelegate, 
             alert.show()
             
         case .Over:
+            self.gameController.vsComputer = self.vsComputerSwitch.on
+            self.gameController.computerFirst = self.computerFirstSwitch.on
             self.gameController.reset()
             self.boardView.reloadData()
             
         case .Start:
+            self.gameController.vsComputer = self.vsComputerSwitch.on
+            self.gameController.computerFirst = self.computerFirstSwitch.on
             self.gameController.reset()
 
         default:

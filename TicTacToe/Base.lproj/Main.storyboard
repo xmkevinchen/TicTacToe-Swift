@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6249" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="P8i-yU-tar">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6249" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="P8i-yU-tar">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6243"/>
@@ -8,7 +8,6 @@
         <!--Navigation Controller-->
         <scene sceneID="xe4-Zi-x38">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="oKv-kk-kvr" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="P8i-yU-tar" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ff0-KJ-Wwv">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
@@ -18,8 +17,9 @@
                         <segue destination="22d-Mb-MoK" kind="relationship" relationship="rootViewController" id="a1t-LN-egf"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oKv-kk-kvr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-504" y="270"/>
+            <point key="canvasLocation" x="-268.80000000000001" y="255.59999999999999"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="WgH-fe-rnr">
@@ -30,32 +30,81 @@
                         <viewControllerLayoutGuide type="bottom" id="ccb-w0-Ado"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="YOu-uF-VP1">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FhF-K1-yAI" customClass="GameBoardView" customModule="TicTacToe" customModuleProvider="target">
-                                <rect key="frame" x="140" y="140" width="320" height="320"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="320"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="320" id="XfD-n5-731"/>
-                                    <constraint firstAttribute="height" constant="320" id="sLp-xh-OkW"/>
+                                    <constraint firstAttribute="width" constant="320" id="9bo-lN-Vvd"/>
+                                    <constraint firstAttribute="height" constant="320" id="mCi-dH-Vjk"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VS Computer" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9kw-Ia-NNW">
+                                <rect key="frame" x="16" y="397" width="120" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="6JC-Fr-7Tc"/>
+                                    <constraint firstAttribute="height" constant="21" id="e7w-JL-4lk"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vfz-d8-CHm">
+                                <rect key="frame" x="259" y="392" width="51" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="49" id="0kO-Tr-LII"/>
+                                    <constraint firstAttribute="height" constant="31" id="m7S-gB-Opj"/>
+                                </constraints>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Computer First" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PYa-wq-K5u">
+                                <rect key="frame" x="16" y="439" width="120" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="eyq-zO-iD9"/>
+                                    <constraint firstAttribute="width" constant="120" id="wwc-7p-Zqz"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="vbh-Bl-kb0">
+                                <rect key="frame" x="259" y="434" width="51" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31" id="9pN-9v-uUZ"/>
+                                    <constraint firstAttribute="width" constant="49" id="xM8-Oa-EXA"/>
+                                </constraints>
+                            </switch>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="FhF-K1-yAI" secondAttribute="centerX" id="FbK-67-Mzw"/>
-                            <constraint firstAttribute="centerY" secondItem="FhF-K1-yAI" secondAttribute="centerY" id="qTq-16-Xyu"/>
+                            <constraint firstItem="9kw-Ia-NNW" firstAttribute="top" secondItem="FhF-K1-yAI" secondAttribute="bottom" constant="13" id="32B-Oo-Mxv"/>
+                            <constraint firstAttribute="trailing" secondItem="Vfz-d8-CHm" secondAttribute="trailing" constant="12" id="K6c-io-E3y"/>
+                            <constraint firstItem="PYa-wq-K5u" firstAttribute="leading" secondItem="YOu-uF-VP1" secondAttribute="leading" constant="16" id="KfA-pN-bXi"/>
+                            <constraint firstAttribute="centerX" secondItem="FhF-K1-yAI" secondAttribute="centerX" id="Wgi-7m-BSr"/>
+                            <constraint firstItem="PYa-wq-K5u" firstAttribute="top" secondItem="9kw-Ia-NNW" secondAttribute="bottom" constant="21" id="X8f-NI-Igo"/>
+                            <constraint firstAttribute="trailing" secondItem="vbh-Bl-kb0" secondAttribute="trailing" constant="12" id="Z7D-mq-Bhr"/>
+                            <constraint firstItem="9kw-Ia-NNW" firstAttribute="leading" secondItem="YOu-uF-VP1" secondAttribute="leading" constant="16" id="e4m-WL-qVX"/>
+                            <constraint firstItem="Vfz-d8-CHm" firstAttribute="top" secondItem="FhF-K1-yAI" secondAttribute="bottom" constant="8" id="g0h-XY-IeQ"/>
+                            <constraint firstItem="vbh-Bl-kb0" firstAttribute="top" secondItem="Vfz-d8-CHm" secondAttribute="bottom" constant="11" id="oDq-aJ-nB2"/>
+                            <constraint firstItem="FhF-K1-yAI" firstAttribute="top" secondItem="s3d-Jz-hN2" secondAttribute="bottom" id="ujC-Kg-4YB"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="koQ-Jl-xjh"/>
                     <connections>
                         <outlet property="boardView" destination="FhF-K1-yAI" id="BbG-S9-INR"/>
+                        <outlet property="computerFirstSwitch" destination="vbh-Bl-kb0" id="tkw-o6-KWM"/>
+                        <outlet property="vsComputerSwitch" destination="Vfz-d8-CHm" id="UCC-bQ-ph7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LGk-6D-r9O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="259.5" y="270"/>
+            <point key="canvasLocation" x="138" y="255"/>
         </scene>
     </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
 </document>

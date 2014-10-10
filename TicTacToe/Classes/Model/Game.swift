@@ -43,6 +43,13 @@ class Game {
         }
     }
     
+    func setMode(mode: GameMode) {
+        self.mode = mode
+    }
+    
+    
+    
+    
     func reset() {
         board.reset()
         playerX.moves.removeAll(keepCapacity: false)

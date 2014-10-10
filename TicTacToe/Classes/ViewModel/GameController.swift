@@ -26,6 +26,9 @@ class GameController {
     var status: GameStatus
     var ai: AIEngine
     
+    var vsComputer: Bool = true
+    var computerFirst: Bool = false
+    
     private var wins = [[0, 1, 2], [3, 4, 5], [6, 7, 8],
                         [0, 3, 6], [1, 4, 7], [2, 5, 8],
                         [0, 4, 8], [2, 4, 6]
@@ -84,9 +87,26 @@ class GameController {
         }
     }
     
+    
     func reset() {
         status = .Start
         game.reset()
+        
+        if vsComputer {
+            game.mode = .Computer
+            if computerFirst {
+                game.playerX.mode = .Computer
+                game.playerO.mode = .Human
+            } else {
+                game.playerX.mode = .Human
+                game.playerO.mode = .Computer
+            }
+        } else {
+            game.mode = .Player
+            game.playerX.mode = .Human
+            game.playerO.mode = .Human
+        }
+        
         if game.playerX.mode == .Computer {
             let move = ai.nextMove()
             moveAt(move)
